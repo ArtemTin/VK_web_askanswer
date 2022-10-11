@@ -1,2 +1,2 @@
-# VK_web_askanswer
+# ASKME
 Технопарк ВК, основы Web-технологий, ДЗ
