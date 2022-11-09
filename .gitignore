@@ -129,4 +129,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-/bootstrap-5.0.2-examples/
+bootstrap-5.0.2-examples/*
