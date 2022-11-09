@@ -1,8 +1,11 @@
 from django.http import HttpResponse
+from django.template import loader
 
 
 def main_view(request):
-    return HttpResponse("Hello, world. Main")
+    template = loader.get_template("askme/base.html")
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 
 def hot_view(request):
