@@ -4,7 +4,7 @@ from django.template import loader
 
 def main_view(request):
     template = loader.get_template("askme/base.html")
-    context = {"user": {"is_logged": False}}
+    context = {"user": {"is_logged": True}}
     return HttpResponse(template.render(context, request))
 
 
