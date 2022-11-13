@@ -67,7 +67,13 @@
                 <h2>Popular Tags</h2>
                 <div class="container-fluid">
                     {% for tag in tags %}
-                        <a href="/tags/{{ tag.url_name }}">{{ tag.human_name }}</a>
+                        <a href="/tags/{{ tag.url_name|lower }}">{{ tag.human_name }}</a>
+                    {% endfor %}
+                </div>
+                <h2>Best Members</h2>
+                <div class="d-flex flex-column">
+                    {% for best_member in best_members %}
+                        <div>{{ best_member.name }}</div>
                     {% endfor %}
                 </div>
             </div>
