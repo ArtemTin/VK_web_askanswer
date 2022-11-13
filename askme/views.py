@@ -13,20 +13,20 @@ mock_tags = [
 ]
 
 mock_questions = [
-    {"id": "675", "asker": mock_users[1], "title": "Test Title", "rating": 15, "my_rating": 1, "answers_cnt": 5, "tags": [mock_tags[0], mock_tags[1]], "teaser":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
+    {"id": "675", "asker": mock_users[0], "title": "Test Title", "rating": 15, "my_rating": 1, "answers_cnt": 5, "tags": [mock_tags[0], mock_tags[1], mock_tags[2]], "teaser":"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
 ]
 
 
 
 def main_view(request):
     template = loader.get_template("askme/index.html")
-    context = {"tab": "new", "user": mock_users[0], "questions": mock_questions}
+    context = {"tab": "new", "user": mock_users[0], "questions": mock_questions, "popular_tags": mock_tags, "best_members": mock_users}
     return HttpResponse(template.render(context, request))
 
 
 def hot_view(request):
     template = loader.get_template("askme/index.html")
-    context = {"tab": "hot", "user": mock_users[0], "questions": mock_questions}
+    context = {"tab": "new", "user": mock_users[1], "questions": mock_questions, "popular_tags": mock_tags, "best_members": mock_users}
     return HttpResponse(template.render(context, request))
 
 

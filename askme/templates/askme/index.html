@@ -2,21 +2,27 @@
 
 {% block main_content %}
     <div class="container d-flex d-inline-flex m-3">
-        <a href="{% url "hot_view" %}" class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "hot" %} btn-primary {% else %} btn-outline-secondary {% endif %} ">Hot questions</a>
-        <a href="{% url "main_view" %}" class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "new" %} btn-primary {% else %} btn-outline-secondary {% endif %}">New questions</a>
+        <a href="{% url "hot_view" %}"
+           class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "hot" %} btn-primary {% else %} btn-outline-secondary {% endif %} ">Hot
+            questions</a>
+        <a href="{% url "main_view" %}"
+           class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "new" %} btn-primary {% else %} btn-outline-secondary {% endif %}">New
+            questions</a>
     </div>
-    <div class="container d-flex flex-column m-3">
+    <div class="d-flex flex-column">
         {% for question in questions %}
-            <div class="container d-flex">
-                <div class="container d-flex flex-column">
+            <div class="d-flex flex-row">
+                <div class="p-3 d-flex flex-column bg-secondary">
+                    <!-- Аватарка и счетчик -->
                     <a href="{% url "settings_view" question.asker.id %}">
-                        <img class="img-fluid" src="{{ question.asker.avatar_url }}" width="44" height="44" role="img">
+                        <img class="img m-2" src="{{ question.asker.avatar_url }}" width="44" height="44"
+                             role="img">
                     </a>
-                    <div class="container d-flex">
-                        <p>{{ question.rating }}</p>
+                    <div class="d-flex flex-row align-items-center">
+                        <p class="bg-primary">{{ question.rating }}</p>
                         <div class="btn-group-vertical">
                             <button type="button"
-                                    class="btn  {% if question.my_rating > 0 %} btn-success {% else %} btn-outline-success {% endif %}">
+                                    class="btn {% if question.my_rating > 0 %} btn-success {% else %} btn-outline-success {% endif %}">
                                 +
                             </button>
                             <button type="button"
@@ -26,20 +32,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="container d-flex flex-column">
+                <div class="p-3 d-flex flex-column">
+                    <!-- Заголовок, текст вопроса, кол-во ответов и теги -->
                     <a href="{% url "question_view" question.id %}">
                         <h2>{{ question.title }}</h2>
                     </a>
-                    <p>{{ question.teaser|truncatewords:'100' }}</p>
-                    <div class="container d-flex">
+                    <p>{{ question.teaser|truncatechars:'200' }}</p>
+                    <div class="d-flex flex-row">
                         <a href="{% url "question_view" question.id %}">
-                            <h2>Answer ({{ question.answers_cnt }})</h2>
+                            <p>Answers ({{ question.answers_cnt }})</p>
                         </a>
                         <p>Tags:</p>
-                        <div class="d-inline-flex">
+                        <div class="d-flex">
                             {% for tag in question.tags %}
-                                <a href="{% url "tag_view" tag.internal_name %}">
-                                    {{ tag.human_name }}
+                                <a class="row m-2" href="{% url "tag_view" tag.internal_name %}">
+                                    <p>{{ tag.human_name }}</p>
                                 </a>
                             {% endfor %}
                         </div>
