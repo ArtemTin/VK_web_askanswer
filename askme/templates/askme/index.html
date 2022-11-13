@@ -2,14 +2,14 @@
 
 {% block main_content %}
     <div class="container d-flex d-inline-flex m-3">
-        <button class="btn flex-fill mt-3 mb-3 me-3 {% if context.tab == "hot" %} btn-primary {% else %} btn-outline-secondary {% endif %} ">Hot questions</button>
-        <button class="btn flex-fill mt-3 mb-3 me-3 {% if context.tab == "new" %} btn-primary {% else %} btn-outline-secondary {% endif %}">New questions</button>
+        <a href="{% url "hot_view" %}" class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "hot" %} btn-primary {% else %} btn-outline-secondary {% endif %} ">Hot questions</a>
+        <a href="{% url "main_view" %}" class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "new" %} btn-primary {% else %} btn-outline-secondary {% endif %}">New questions</a>
     </div>
     <div class="container d-flex flex-column m-3">
         {% for question in questions %}
             <div class="container d-flex">
                 <div class="container d-flex flex-column">
-                    <a href="{{ question.asker.profile_url }}">
+                    <a href="{% url "settings_view" question.asker.id %}">
                         <img class="img-fluid" src="{{ question.asker.avatar_url }}" width="44" height="44" role="img">
                     </a>
                     <div class="container d-flex">
@@ -27,19 +27,19 @@
                     </div>
                 </div>
                 <div class="container d-flex flex-column">
-                    <a href="{{ question.self_url }}">
+                    <a href="{% url "question_view" question.id %}">
                         <h2>{{ question.title }}</h2>
                     </a>
                     <p>{{ question.teaser|truncatewords:'100' }}</p>
                     <div class="container d-flex">
-                        <a href="{{ question.self_url }}">
+                        <a href="{% url "question_view" question.id %}">
                             <h2>Answer ({{ question.answers_cnt }})</h2>
                         </a>
                         <p>Tags:</p>
                         <div class="d-inline-flex">
                             {% for tag in question.tags %}
-                                <a href="{{ tag.url }}">
-                                    {{ tag.name }}
+                                <a href="{% url "tag_view" tag.internal_name %}">
+                                    {{ tag.human_name }}
                                 </a>
                             {% endfor %}
                         </div>
