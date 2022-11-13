@@ -59,13 +59,18 @@
     <div class="row align-items-start">
         <div class="col-8">
             {% block main_content %}
-            
+                <h1>Hello, world!</h1>
             {% endblock %}
         </div>
         <div class="col-4">
-            {% block side_content %}
-            
-            {% endblock %}
+            <div class="d-flex flex-column">
+                <h2>Popular Tags</h2>
+                <div class="container-fluid">
+                    {% for tag in tags %}
+                        <a href="/tags/{{ tag.url_name }}">{{ tag.human_name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 
