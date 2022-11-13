@@ -14,7 +14,7 @@
 <header class="border-bottom bg-light">
     <div class="container d-inline-flex flex-wrap justify-content-evenly align-items-center">
         <!-- Иконка сайта и название -->
-        <a href="/" class="me-auto">
+        <a href="/askme/static" class="me-auto">
             <div class="d-flex flex-row justify-content-evenly align-items-center">
                 <img src="../../static/img/logo.jpg" class="m-3" width="44" height="50" role="img" alt="Home">
                 <h2 class="flex-column">Ask me</h2>
@@ -67,7 +67,7 @@
                 <h2>Popular Tags</h2>
                 <div class="container-fluid">
                     {% for tag in tags %}
-                        <a href="/tags/{{ tag.url_name|lower }}">{{ tag.human_name }}</a>
+                        <a href="/tags/{{ tag.url|lower }}">{{ tag.human_name }}</a>
                     {% endfor %}
                 </div>
                 <h2>Best Members</h2>

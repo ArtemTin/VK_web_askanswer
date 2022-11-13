@@ -1,0 +1,51 @@
+{% extends "askme/base.html" %}
+
+{% block main_content %}
+    <div class="container d-flex d-inline-flex m-3">
+        <button class="btn flex-fill mt-3 mb-3 me-3 {% if context.tab == "hot" %} btn-primary {% else %} btn-outline-secondary {% endif %} ">Hot questions</button>
+        <button class="btn flex-fill mt-3 mb-3 me-3 {% if context.tab == "new" %} btn-primary {% else %} btn-outline-secondary {% endif %}">New questions</button>
+    </div>
+    <div class="container d-flex flex-column m-3">
+        {% for question in questions %}
+            <div class="container d-flex">
+                <div class="container d-flex flex-column">
+                    <a href="{{ question.asker.profile_url }}">
+                        <img class="img-fluid" src="{{ question.asker.avatar_url }}" width="44" height="44" role="img">
+                    </a>
+                    <div class="container d-flex">
+                        <p>{{ question.rating }}</p>
+                        <div class="btn-group-vertical">
+                            <button type="button"
+                                    class="btn  {% if question.my_rating > 0 %} btn-success {% else %} btn-outline-success {% endif %}">
+                                +
+                            </button>
+                            <button type="button"
+                                    class="btn {% if question.my_rating < 0 %} btn-danger {% else %} btn-outline-danger {% endif %}">
+                                -
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="container d-flex flex-column">
+                    <a href="{{ question.self_url }}">
+                        <h2>{{ question.title }}</h2>
+                    </a>
+                    <p>{{ question.teaser|truncatewords:'100' }}</p>
+                    <div class="container d-flex">
+                        <a href="{{ question.self_url }}">
+                            <h2>Answer ({{ question.answers_cnt }})</h2>
+                        </a>
+                        <p>Tags:</p>
+                        <div class="d-inline-flex">
+                            {% for tag in question.tags %}
+                                <a href="{{ tag.url }}">
+                                    {{ tag.name }}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
