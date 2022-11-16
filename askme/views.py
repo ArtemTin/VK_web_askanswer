@@ -66,7 +66,7 @@ def hot_view(request):
         raise Http404('Page is not found')
 
     template = loader.get_template("askme/index.html")
-    context = {"tab": "hot", "user": mock_users[0], "page_objs": questions_now, "popular_tags": mock_tags,
+    context = {"tab": "hot", "user": {}, "page_objs": questions_now, "popular_tags": mock_tags,
                "best_members": Profile.objects.get_top()[:10]}
     return HttpResponse(template.render(context, request))
 
@@ -98,17 +98,23 @@ def question_view(request, question_id):
 
 
 def login_view(request):
-    return HttpResponse("Hello, world. Login")
+    template = loader.get_template("askme/login.html")
+    context = {"popular_tags": mock_tags,
+               "best_members": Profile.objects.get_top()[:10], "user": {}}
+    return HttpResponse(template.render(context, request))
 
 
 def signup_view(request):
-    return HttpResponse("Hello, world. Signup")
+    template = loader.get_template("askme/signup.html")
+    context = {"popular_tags": mock_tags,
+               "best_members": Profile.objects.get_top()[:10], "user": {}}
+    return HttpResponse(template.render(context, request))
 
 
 def ask_view(request):
     template = loader.get_template("askme/ask_question.html")
     context = {"tab": "hot", "user": mock_users[0], "popular_tags": mock_tags,
-               "best_members": Profile.objects.get_top()[:10]}
+               "best_members": Profile.objects.get_top()[:10], }
     return HttpResponse(template.render(context, request))
 
 

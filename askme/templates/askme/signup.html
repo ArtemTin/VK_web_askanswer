@@ -1,0 +1,27 @@
+{% extends "askme/base.html" %}
+
+{% block main_content %}
+    <div class="m-3 d-flex flex-column">
+        <h1 class="m-3">Registration</h1>
+        <form class="m-3">
+            <div class="mb-3">
+                <label for="email" class="form-label">Nickname</label>
+                <input type="text" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <div class="mb-3">
+                <label for="password-rp" class="form-label">Repeat password</label>
+                <input type="password" class="form-control" id="password-rp">
+            </div>
+            <button type="submit" class="m-3 btn btn-primary">Register!</button>
+            <button type="submit" class="m-3 btn btn-secondary">Log in</button>
+        </form>
+    </div>
+{% endblock %}
