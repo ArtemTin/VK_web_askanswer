@@ -72,12 +72,24 @@ def hot_view(request):
 
 
 def tag_view(request, tag_name):
-    return HttpResponse("Hello, world. Tag {}".format(tag_name))
+    tag = Tag.objects.get(name=tag_name)
+    paginator = Paginator(tag.question_set.all(), 10)
+    page_num = request.GET.get('page')
+    if page_num is None:
+        page_num = 1
+    try:
+        questions = paginator.page(page_num)
+    except InvalidPage:
+        raise Http404('Page is not found')
+    template = loader.get_template("askme/tag_page.html")
+    context = {"user": mock_users[0], "popular_tags": mock_tags,
+               "best_members": Profile.objects.get_top()[:10], "tag": tag, "page_objs": questions}
+    return HttpResponse(template.render(context, request))
 
 
 def question_view(request, question_id):
     question = Question.objects.get(pk=question_id)
-    answers = question.answer_set.all()
+    answers = question.answer_set.all().order_by() # order by rating?
     print(answers)
     template = loader.get_template("askme/question_page.html")
     context = {"user": mock_users[0], "popular_tags": mock_tags,
@@ -96,7 +108,7 @@ def signup_view(request):
 def ask_view(request):
     template = loader.get_template("askme/ask_question.html")
     context = {"tab": "hot", "user": mock_users[0], "popular_tags": mock_tags,
-               "best_members": mock_users}
+               "best_members": Profile.objects.get_top()[:10]}
     return HttpResponse(template.render(context, request))
 
 

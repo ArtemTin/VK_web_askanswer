@@ -49,13 +49,15 @@
             </div>
         </div>
 
+        <div class="border">
         {% for answer in answers %}
             {% include "askme/answer_template.html" %}
         {% endfor %}
+        </div>
         <div class="m-3 d-flex flex-row">
             <label class="col-form-label m-3" for="body">Добавить ответ</label>
             <textarea class="form-control" type="text" id="body"></textarea>
         </div>
-        <button class="m-3 btn btn-success align-self-center">Задать!</button>
+        <button class="m-3 btn btn-success align-self-center">Отправить!</button>
     </div>
 {% endblock %}
