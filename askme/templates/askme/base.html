@@ -90,6 +90,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
+                                <th scope="col">Rating</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -97,6 +98,7 @@
                                 <tr>
                                     <th scope="row">{{ forloop.counter }}</th>
                                     <td href="{% url "settings_view" member.id %}">{{ member.name }}</td>
+                                    <td>{{ member.user_rating }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

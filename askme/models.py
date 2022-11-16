@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum
 
 
 # Managers
@@ -12,13 +12,26 @@ class QuestionManager(models.Manager):
             rating=Count("questionlike", filter=Q(questionlike__value=1)) - Count("questionlike", filter=Q(questionlike__value=-1))
         )
         return objs.order_by("-rating")
+
+    def get_new(self):
+        return super().all().order_by("date")
 # Create your models here.
+
+class ProfileManager(models.Manager):
+
+    def get_top(self):
+        objs = super().all()
+        objs = objs.annotate(
+            user_rating=Count("question")
+        )
+        return objs.order_by("-user_rating")
 
 
 class Profile(models.Model):
     name = models.CharField(max_length=80)
     avatar = models.CharField(max_length=255)  # ImageField!!
     signup_date = models.DateTimeField(auto_now_add=True)
+    objects = ProfileManager()
     def questions(self):
         return self.question_set
 

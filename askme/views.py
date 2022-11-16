@@ -40,7 +40,7 @@ mock_questions = [
 
 
 def main_view(request):
-    paginator = Paginator(Question.objects.all(), 10)
+    paginator = Paginator(Question.objects.get_new(), 10)
     page_num = request.GET.get('page')
     if page_num is None:
         page_num = 1
@@ -51,7 +51,7 @@ def main_view(request):
 
     template = loader.get_template("askme/index.html")
     context = {"tab": "new", "user": mock_users[0], "page_objs": questions_now, "popular_tags": mock_tags,
-               "best_members": mock_users}
+               "best_members": Profile.objects.get_top()[:4]}
     return HttpResponse(template.render(context, request))
 
 
