@@ -9,12 +9,15 @@ class QuestionManager(models.Manager):
     def get_hot(self):
         objs = super().all()
         objs = objs.annotate(
-            rating=Count("questionlike", filter=Q(questionlike__value=1)) - Count("questionlike", filter=Q(questionlike__value=-1))
+            rating=Count("questionlike", filter=Q(questionlike__value=1)) - Count("questionlike",
+                                                                                  filter=Q(questionlike__value=-1))
         )
         return objs.order_by("-rating")
 
     def get_new(self):
         return super().all().order_by("date")
+
+
 # Create your models here.
 
 class ProfileManager(models.Manager):
@@ -32,9 +35,9 @@ class Profile(models.Model):
     avatar = models.CharField(max_length=255)  # ImageField!!
     signup_date = models.DateTimeField(auto_now_add=True)
     objects = ProfileManager()
+
     def questions(self):
         return self.question_set
-
 
 
 class Tag(models.Model):
@@ -49,9 +52,11 @@ class Question(models.Model):
     tags = models.ManyToManyField("Tag")
     date = models.DateTimeField(auto_now_add=True)
     objects = QuestionManager()
+
     # рейтинг высчитывается
     def rating(self):
-        return self.questionlike_set.filter(value__exact=1).count() - self.questionlike_set.filter(value__exact=-1).count()
+        return self.questionlike_set.filter(value__exact=1).count() - self.questionlike_set.filter(
+            value__exact=-1).count()
 
 
 class Answer(models.Model):
@@ -59,7 +64,9 @@ class Answer(models.Model):
     body = models.TextField()
     question = models.ForeignKey("Question", on_delete=models.CASCADE)
     answerer = models.ForeignKey("Profile", on_delete=models.CASCADE)
+    is_correct = models.BooleanField()
     date = models.DateTimeField(auto_now_add=True)
+
     # рейтинг высчитывается
     def rating(self):
         return self.answerlike_set.filter(value__exact=1).count() - self.answerlike_set.filter(value__exact=-1).count()
@@ -85,5 +92,3 @@ class AnswerLike(models.Model):
     liker = models.ForeignKey("Profile", on_delete=models.CASCADE)
     value = models.IntegerField(choices=LikeStatus.choices)
     date = models.DateTimeField(auto_now_add=True)
-
-

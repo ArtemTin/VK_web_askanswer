@@ -84,6 +84,11 @@ class Command(BaseCommand):
                  "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
                  "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi "
                  "ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in "
+                 "voluptate velit esse "
+                 " ipsum dolor sit amet, consectetur adipiscing elit, "
+                 "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+                 "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi "
+                 "ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in "
                  "voluptate velit esse ".format(i + 1),
             asker=Profile.objects.get(name="User {}".format(random.randrange(max_users) + 1)))
         return tmp
@@ -97,7 +102,8 @@ class Command(BaseCommand):
                  "ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in "
                  "voluptate velit esse ".format(i + 1),
             question=Question.objects.get(title="Question title {}".format(random.randrange(max_questions) + 1)),
-            answerer=Profile.objects.get(name="User {}".format(random.randrange(max_users) + 1))
+            answerer=Profile.objects.get(name="User {}".format(random.randrange(max_users) + 1)),
+            is_correct=(random.choice([True, False]))
         )
         return tmp
 

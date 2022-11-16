@@ -51,7 +51,7 @@ def main_view(request):
 
     template = loader.get_template("askme/index.html")
     context = {"tab": "new", "user": mock_users[0], "page_objs": questions_now, "popular_tags": mock_tags,
-               "best_members": Profile.objects.get_top()[:4]}
+               "best_members": Profile.objects.get_top()[:10]}
     return HttpResponse(template.render(context, request))
 
 
@@ -67,7 +67,7 @@ def hot_view(request):
 
     template = loader.get_template("askme/index.html")
     context = {"tab": "hot", "user": mock_users[0], "page_objs": questions_now, "popular_tags": mock_tags,
-               "best_members": mock_users}
+               "best_members": Profile.objects.get_top()[:10]}
     return HttpResponse(template.render(context, request))
 
 
@@ -81,7 +81,7 @@ def question_view(request, question_id):
     print(answers)
     template = loader.get_template("askme/question_page.html")
     context = {"user": mock_users[0], "popular_tags": mock_tags,
-               "best_members": mock_users, "question": question, "answers": answers}
+               "best_members": Profile.objects.get_top()[:10], "question": question, "answers": answers}
     return HttpResponse(template.render(context, request))
 
 
