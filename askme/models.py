@@ -1,21 +1,23 @@
 from django.db import models
+from django.db.models import Count, Q
 
 
 # Managers
 
 class QuestionManager(models.Manager):
 
-    def get_new(self):
-        return super().order_by("date", "rating")
-
     def get_hot(self):
-        return super().order_by("rating", "date")
+        objs = super().all()
+        objs = objs.annotate(
+            rating=Count("questionlike", filter=Q(questionlike__value=1)) - Count("questionlike", filter=Q(questionlike__value=-1))
+        )
+        return objs.order_by("-rating")
 # Create your models here.
 
 
 class Profile(models.Model):
     name = models.CharField(max_length=80)
-    avatar = models.CharField(max_length=255)
+    avatar = models.CharField(max_length=255)  # ImageField!!
     signup_date = models.DateTimeField(auto_now_add=True)
     def questions(self):
         return self.question_set
@@ -28,12 +30,12 @@ class Tag(models.Model):
 
 
 class Question(models.Model):
-    objects = QuestionManager
     title = models.CharField(max_length=80)
     body = models.TextField()
     asker = models.ForeignKey("Profile", on_delete=models.CASCADE)
     tags = models.ManyToManyField("Tag")
     date = models.DateTimeField(auto_now_add=True)
+    objects = QuestionManager()
     # рейтинг высчитывается
     def rating(self):
         return self.questionlike_set.filter(value__exact=1).count() - self.questionlike_set.filter(value__exact=-1).count()

@@ -56,10 +56,18 @@ def main_view(request):
 
 
 def hot_view(request):
+    paginator = Paginator(Question.objects.get_hot(), 10)
+    page_num = request.GET.get('page')
+    if page_num is None:
+        page_num = 1
+    try:
+        questions_now = paginator.page(page_num)
+    except InvalidPage:
+        raise Http404('Page is not found')
+
     template = loader.get_template("askme/index.html")
-    context = {"tab": "hot", "user": None, "questions": [mock_questions[i % len(mock_questions)] for i in range(15)],
-               "popular_tags": [mock_tags[i % len(mock_tags)] for i in range(10)],
-               "best_members": [mock_users[i % len(mock_users)] for i in range(10)]}
+    context = {"tab": "hot", "user": mock_users[0], "page_objs": questions_now, "popular_tags": mock_tags,
+               "best_members": mock_users}
     return HttpResponse(template.render(context, request))
 
 
