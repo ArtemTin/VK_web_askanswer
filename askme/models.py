@@ -15,7 +15,7 @@ class QuestionManager(models.Manager):
         return objs.order_by("-rating")
 
     def get_new(self):
-        return super().all().order_by("date")
+        return super().all().order_by("-date")
 
 
 # Create your models here.
