@@ -1,0 +1,21 @@
+{% extends "askme/base.html" %}
+
+{% block main_content %}
+    <div class="m-3 d-flex flex-column">
+        <h1 class="m-3">Задать вопрос</h1>
+        <div class="m-3 d-flex flex-row">
+            <label class="col-form-label m-3" for="title">Заголовок</label>
+            <input class="form-control" type="text" id="title">
+        </div>
+        <div class="m-3 d-flex flex-row">
+            <label class="col-form-label m-3" for="body">Текст вопроса</label>
+            <textarea class="form-control" type="text" id="body"></textarea>
+        </div>
+    <div class="m-3 d-flex flex-row">
+            <label class="col-form-label m-3" for="tags">Теги</label>
+            <input class="form-control" type="text" id="tags">
+        </div>
+    <button class="m-3 btn btn-success align-self-center">Задать!</button>
+    </div>
+
+{% endblock %}

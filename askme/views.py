@@ -88,7 +88,10 @@ def signup_view(request):
 
 
 def ask_view(request):
-    return HttpResponse("Hello, world. Ask")
+    template = loader.get_template("askme/ask_question.html")
+    context = {"tab": "hot", "user": mock_users[0], "popular_tags": mock_tags,
+               "best_members": mock_users}
+    return HttpResponse(template.render(context, request))
 
 
 def settings_view(request, user_id):
