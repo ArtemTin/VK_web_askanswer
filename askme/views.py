@@ -1,6 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.template import loader
 from django.core.paginator import Paginator, InvalidPage
+from askme.models import *
 
 mock_users = [
     {"id": "1", "avatar_url": "https://github.com/mdo.png", "name": "Dr. Pepper"},
@@ -39,8 +40,7 @@ mock_questions = [
 
 
 def main_view(request):
-    questions_list = [mock_questions[i % len(mock_questions)] for i in range(25)]  # Contacts.objects.all()
-    paginator = Paginator(questions_list, 10)
+    paginator = Paginator(Question.objects.all(), 10)
     page_num = request.GET.get('page')
     if page_num is None:
         page_num = 1

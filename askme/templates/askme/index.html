@@ -40,16 +40,16 @@
                     <a class="m-3 text-center" href="{% url "question_view" question.id %}">
                         <h2>{{ question.title }}</h2>
                     </a>
-                    <p class="m-3">{{ question.teaser|truncatechars:'200' }}</p>
+                    <p class="m-3">{{ question.body|truncatechars:'200' }}</p>
                     <div class="m-3 d-flex flex-lg-row flex-column align-items-center justify-content-around">
                         <a class="me-lg-auto " href="{% url "question_view" question.id %}">
-                            <p>Answers ({{ question.answers_cnt }})</p>
+                            <p>Answers ({{ question.answers__set.count }})</p>
                         </a>
                         <p>Tags:</p>
                         <div class="d-inline-flex">
-                            {% for tag in question.tags %}
-                                <a class="row m-1" href="{% url "tag_view" tag.human_name|escape %}">
-                                    <p>{{ tag.human_name }}</p>
+                            {% for tag in question.tags.all %}
+                                <a class="row m-1" href="{% url "tag_view" tag.name|escape %}">
+                                    <p>{{ tag.name }}</p>
                                 </a>
                             {% endfor %}
                         </div>
