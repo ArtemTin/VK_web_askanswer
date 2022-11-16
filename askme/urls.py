@@ -6,7 +6,7 @@ urlpatterns = [
     path("", views.main_view, name="main_view"),
     path("hot/", views.hot_view, name="hot_view"),
     path("settings/<int:user_id>", views.settings_view, name="settings_view"),
-    path("tag/<slug:tag_name>", views.tag_view, name="tag_view"),
+    path("tag/<str:tag_name>", views.tag_view, name="tag_view"),
     path("question/<int:question_id>", views.question_view, name="question_view"),
     path("ask/", views.ask_view, name="ask_view"),
 

@@ -1,7 +1,7 @@
 {% extends "askme/base.html" %}
 
 {% block main_content %}
-    <div class="container d-flex d-inline-flex m-3">
+    <div class="d-flex flex-row m-3">
         <a href="{% url "hot_view" %}"
            class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "hot" %} btn-primary {% else %} btn-outline-secondary {% endif %} ">Hot
             questions</a>
@@ -9,17 +9,20 @@
            class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "new" %} btn-primary {% else %} btn-outline-secondary {% endif %}">New
             questions</a>
     </div>
-    <div class="d-flex flex-column">
-        {% for question in questions %}
-            <div class="d-flex flex-row">
-                <div class="p-3 d-flex flex-column bg-secondary">
+    <div class="d-flex flex-column m-3">
+        {% for question in page_objs %}
+            <div class="m-2 m-sm-3 d-flex flex-column-reverse flex-sm-row justify-content-evenly border">
+                <!-- Блок вопроса -->
+                <div class="m-3 d-flex flex-row flex-sm-column justify-content-center align-items-center border">
                     <!-- Аватарка и счетчик -->
-                    <a href="{% url "settings_view" question.asker.id %}">
-                        <img class="img m-2" src="{{ question.asker.avatar_url }}" width="44" height="44"
+                    <a class="m-3 align-self-end align-items-center" href="{% url "settings_view" question.asker.id %}">
+                        <img class="img" src="{{ question.asker.avatar_url }}" width="66" height="66"
                              role="img">
+                        <p class="text">{{ question.asker.name }}</p>
                     </a>
-                    <div class="d-flex flex-row align-items-center">
-                        <p class="bg-primary">{{ question.rating }}</p>
+                    <div class="m-3 d-flex flex-row align-items-center">
+                        <!-- счетчик -->
+                        <h4 class="m-1">{{ question.rating }}</h4>
                         <div class="btn-group-vertical">
                             <button type="button"
                                     class="btn {% if question.my_rating > 0 %} btn-success {% else %} btn-outline-success {% endif %}">
@@ -32,20 +35,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-3 d-flex flex-column">
+                <div class="m-3 d-flex flex-column border">
                     <!-- Заголовок, текст вопроса, кол-во ответов и теги -->
-                    <a href="{% url "question_view" question.id %}">
+                    <a class="m-3 text-center" href="{% url "question_view" question.id %}">
                         <h2>{{ question.title }}</h2>
                     </a>
-                    <p>{{ question.teaser|truncatechars:'200' }}</p>
-                    <div class="d-flex flex-row">
-                        <a href="{% url "question_view" question.id %}">
+                    <p class="m-3">{{ question.teaser|truncatechars:'200' }}</p>
+                    <div class="m-3 d-flex flex-lg-row flex-column align-items-center justify-content-around">
+                        <a class="me-lg-auto " href="{% url "question_view" question.id %}">
                             <p>Answers ({{ question.answers_cnt }})</p>
                         </a>
                         <p>Tags:</p>
-                        <div class="d-flex">
+                        <div class="d-inline-flex">
                             {% for tag in question.tags %}
-                                <a class="row m-2" href="{% url "tag_view" tag.internal_name %}">
+                                <a class="row m-1" href="{% url "tag_view" tag.human_name|escape %}">
                                     <p>{{ tag.human_name }}</p>
                                 </a>
                             {% endfor %}
@@ -55,4 +58,5 @@
             </div>
         {% endfor %}
     </div>
+    {% include "askme/paginator.html" %}
 {% endblock %}
