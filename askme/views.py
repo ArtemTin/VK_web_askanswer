@@ -76,7 +76,13 @@ def tag_view(request, tag_name):
 
 
 def question_view(request, question_id):
-    return HttpResponse("Hello, world. Question {}".format(question_id))
+    question = Question.objects.get(pk=question_id)
+    answers = question.answer_set.all()
+    print(answers)
+    template = loader.get_template("askme/question_page.html")
+    context = {"user": mock_users[0], "popular_tags": mock_tags,
+               "best_members": mock_users, "question": question, "answers": answers}
+    return HttpResponse(template.render(context, request))
 
 
 def login_view(request):

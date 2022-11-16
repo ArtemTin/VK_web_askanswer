@@ -30,7 +30,7 @@
         <p class="m-3">{{ question.body|truncatechars:'200' }}</p>
         <div class="m-3 d-flex flex-lg-row flex-column align-items-center justify-content-around">
             <a class="me-lg-auto " href="{% url "question_view" question.id %}">
-                <p>Answers ({{ question.answers__set.count }})</p>
+                <p>Answers ({{ question.answer_set.count }})</p>
             </a>
             <p>Tags:</p>
             <div class="d-inline-flex">
