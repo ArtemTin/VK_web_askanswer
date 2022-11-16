@@ -17,36 +17,26 @@
                     +
                 </button>
                 <button type="button"
-                        class="btn {% if question.my_rating < 0 %} btn-danger {% else %} btn-outline-danger {% endif %}">
+                        class="btn {% if answer.my_rating < 0 %} btn-danger {% else %} btn-outline-danger {% endif %}">
                     -
                 </button>
             </div>
         </div>
-        <div class="form-check">
+
+    </div>
+    <div class="m-3 d-flex flex-column border">
+        <!-- Заголовок, текст ответа, галочка "верный" -->
+        <a class="m-3 text-center" href="{% url "question_view" question.id %}">
+            <h2>{{ answer.title }}</h2>
+        </a>
+        <p class="m-3">{{ answer.body }}</p>
+        <div class="m-3 d-flex flex-lg-row flex-column align-items-center justify-content-around">
+            <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="isCorrect">
             <label class="form-check-label" for="idCorrect">
                 Correct answer?
             </label>
         </div>
-    </div>
-    <div class="m-3 d-flex flex-column border">
-        <!-- Заголовок, текст ответа, галочка "верный" -->
-        <a class="m-3 text-center" href="{% url "question_view" question.id %}">
-            <h2>{{ question.title }}</h2>
-        </a>
-        <p class="m-3">{{ question.body }}</p>
-        <div class="m-3 d-flex flex-lg-row flex-column align-items-center justify-content-around">
-            <a class="me-lg-auto " href="{% url "question_view" question.id %}">
-                <p>Answers ({{ question.answer_set.count }})</p>
-            </a>
-            <p>Tags:</p>
-            <div class="d-inline-flex">
-                {% for tag in question.tags.all %}
-                    <a class="row m-1" href="{% url "tag_view" tag.name|escape %}">
-                        <p>{{ tag.name }}</p>
-                    </a>
-                {% endfor %}
-            </div>
         </div>
     </div>
 </div>
