@@ -1,0 +1,42 @@
+<div class="m-2 m-sm-3 d-flex flex-column-reverse flex-sm-row justify-content-evenly">
+    <!-- Блок ответа -->
+    <div class="m-3 d-flex flex-row flex-sm-column justify-content-center align-items-center border">
+        <!-- Аватарка и счетчик -->
+        <a class="m-3 align-self-end align-items-center justify-content-start"
+           href="{% url "settings_view" answer.answerer.id %}">
+            <img class="img" src="{{ answer.answerer.avatar_url }}" width="66" height="66"
+                 role="img">
+            <p class="text">{{ answer.answerer.name }}</p>
+        </a>
+        <div class="m-3 d-flex flex-row align-items-center">
+            <!-- счетчик -->
+            <h4 class="m-1">{{ answer.rating }}</h4>
+            <div class="btn-group-vertical">
+                <button type="button"
+                        class="btn {% if answer.my_rating > 0 %} btn-success {% else %} btn-outline-success {% endif %}">
+                    +
+                </button>
+                <button type="button"
+                        class="btn {% if answer.my_rating < 0 %} btn-danger {% else %} btn-outline-danger {% endif %}">
+                    -
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <div class="m-3 d-flex flex-column border">
+        <!-- Заголовок, текст ответа, галочка "верный" -->
+        <a class="m-3 text-center" href="{% url "question_view" question.id %}">
+            <h2>{{ answer.title }}</h2>
+        </a>
+        <p class="m-3">{{ answer.body }}</p>
+        <div class="m-3 d-flex flex-lg-row flex-column align-items-center justify-content-around">
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="isCorrect">
+            <label class="form-check-label" for="idCorrect">
+                Correct answer?
+            </label>
+        </div>
+        </div>
+    </div>
+</div>

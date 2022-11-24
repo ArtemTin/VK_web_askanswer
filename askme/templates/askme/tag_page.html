@@ -1,0 +1,12 @@
+{% extends "askme/base.html" %}
+
+{% block main_content %}
+    <h2 class="m-3 align-self-center">Tag: {{ tag.name }}</h2>
+    <div class="m-3">
+    {% for question in page_objs %}
+        {% include "askme/question_template.html" %}
+    {% endfor %}
+    </div>
+    {% include "askme/paginator.html" %}
+
+{%  endblock %}

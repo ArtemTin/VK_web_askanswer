@@ -1,0 +1,18 @@
+{% extends "askme/base.html" %}
+
+{% block main_content %}
+    <div class="d-flex flex-row m-3">
+        <a href="{% url "hot_view" %}"
+           class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "hot" %} btn-primary {% else %} btn-outline-secondary {% endif %} ">Hot
+            questions</a>
+        <a href="{% url "main_view" %}"
+           class="btn flex-fill mt-3 mb-3 me-3 {% if tab == "new" %} btn-primary {% else %} btn-outline-secondary {% endif %}">New
+            questions</a>
+    </div>
+    <div class="d-flex flex-column m-3">
+        {% for question in page_objs %}
+            {% include "askme/question_template.html" %}
+        {% endfor %}
+    </div>
+    {% include "askme/paginator.html" %}
+{% endblock %}
